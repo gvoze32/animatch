@@ -1,14 +1,13 @@
-FROM node:16 AS build
+FROM node:18 AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-
 RUN npm ci
 
-COPY tsconfig.json tsconfig.json
-COPY src ./src
+COPY tsconfig.json ./
+COPY astro.config.mjs ./
 COPY public ./public
-COPY astro.config.mjs astro.config.mjs
+COPY src ./src
 
 RUN npm run build
 
