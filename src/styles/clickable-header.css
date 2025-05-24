@@ -1,0 +1,29 @@
+/* Styles for clickable headers */
+.clickable-header {
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.clickable-header::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 50%;
+  background: linear-gradient(90deg, #60a5fa, #a78bfa);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.clickable-header:hover {
+  transform: scale(1.025);
+}
+
+.clickable-header:hover::after {
+  width: 60%;
+}
+
+.clickable-header:active {
+  transform: scale(0.98);
+}

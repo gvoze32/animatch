@@ -1,0 +1,144 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "AniMatch - Find anime similar to your favorites!",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="anime, recommendation, manga, similar anime, animatch, anime discovery"
+    />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+
+    <!-- Google Fonts with optimized loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <style is:global>
+      /* Performance optimizations to reduce flickering during scroll */
+      .render-optimized {
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      .disable-animations * {
+        animation-duration: 0.0001s !important;
+        animation-delay: 0s !important;
+        transition-duration: 0.0001s !important;
+      }
+
+      /* Fix FOUC (Flash of Unstyled Content) */
+      html {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* Improve scrolling behavior */
+      html,
+      body {
+        scroll-behavior: smooth;
+        overscroll-behavior-y: none;
+      }
+
+      /* Add GPU acceleration to cards */
+      .card-optimized {
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+        contain: content;
+      }
+
+      /* Optimize image rendering */
+      .img-optimized {
+        contain: paint;
+        will-change: transform;
+      }
+
+      /* Virtual scrolling optimization */
+      body {
+        scroll-behavior: smooth;
+        overscroll-behavior: none;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-black overflow-x-hidden">
+    <div class="flex flex-col min-h-screen">
+      <slot />
+    </div>
+
+    <script is:inline>
+      // Performance optimizations for scrolling and image loading
+      document.addEventListener("DOMContentLoaded", () => {
+        // Add passive event listeners to improve scroll performance
+        document.addEventListener("scroll", () => {}, { passive: true });
+        document.addEventListener("touchstart", () => {}, { passive: true });
+
+        // Cache references to frequently accessed elements
+        const body = document.body;
+
+        // Optimize scroll performance by disabling animations during rapid scrolling
+        let scrollTimer = null;
+        let isScrolling = false;
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!isScrolling) {
+              isScrolling = true;
+              body.classList.add("disable-animations");
+            }
+
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+              body.classList.remove("disable-animations");
+              isScrolling = false;
+            }, 150);
+          },
+          { passive: true }
+        );
+
+        // Prevent layout shifts by ensuring images maintain aspect ratio
+        const imageObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                  img.src = img.dataset.src;
+                  delete img.dataset.src;
+                }
+              }
+            });
+          },
+          { rootMargin: "50px 0px" }
+        );
+
+        document.querySelectorAll("img.img-optimized").forEach((img) => {
+          imageObserver.observe(img);
+        });
+      });
+    </script>
+  </body>
+</html>

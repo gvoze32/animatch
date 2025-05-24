@@ -1,0 +1,181 @@
+/* Performance optimizations to reduce flickering during scroll */
+
+.render-optimized {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Enhanced disable animations rule to prevent flickering */
+.disable-animations * {
+  animation-duration: 0.0001s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0.0001s !important;
+  transition-property: none !important;
+  transform: none !important;
+}
+
+/* Add GPU acceleration to cards */
+.card-optimized {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: content;
+  transition: transform 0.2s ease-out;
+}
+
+/* Click feedback animation for headers */
+.header-click-feedback {
+  animation: header-click-pulse 0.3s ease-out;
+}
+
+@keyframes header-click-pulse {
+  0% { 
+    box-shadow: 0 0 0 rgba(96, 165, 250, 0);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(96, 165, 250, 0.4);
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  100% { 
+    box-shadow: 0 0 5px rgba(96, 165, 250, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+@keyframes header-ripple {
+  0% {
+    width: 10px;
+    height: 10px;
+    opacity: 0.8;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+.has-click-feedback {
+  overflow: hidden;
+  position: relative;
+}
+
+.header-tooltip {
+  z-index: 100;
+}
+
+/* Optimize image rendering */
+.img-optimized {
+  contain: paint;
+  will-change: transform;
+  image-rendering: high-quality;
+  transform: translateZ(0);
+}
+
+/* Special highlight effect for search results */
+.search-highlight {
+  animation: pulse-highlight 1s ease-out;
+}
+
+@keyframes pulse-highlight {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.3);
+  }
+}
+
+/* Optimize animations for search results section */
+.search-results-container {
+  transform: translateY(-10px);
+  opacity: 0;
+  animation: slide-up-fade-in 0.6s forwards ease-out;
+}
+
+@keyframes slide-up-fade-in {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Reduce layout shifts */
+.layout-stable {
+  contain: layout style;
+}
+
+/* Search results container optimization */
+.search-results-container {
+  scroll-behavior: smooth;
+  contain: content;
+  scroll-margin-block-start: 12rem;
+  scroll-padding-top: 12rem;
+}
+
+/* Custom skeleton loader with reduced flicker */
+.skeleton-optimized {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  contain: paint;
+  will-change: background-position;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Stabilize content during scroll */
+html, body {
+  overscroll-behavior-y: none; /* Prevent bouncing on some browsers */
+  scroll-behavior: smooth;
+}
+
+/* Prevent layout shifts by fixing the height of containers that load dynamic content */
+.height-stable {
+  min-height: 200px;
+  contain: strict;
+}
+
+/* Optimize for scrolling performance */
+.scroll-optimized {
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Debounce animations to prevent flickering */
+.animate-stable {
+  transition-delay: 10ms !important;
+  animation-delay: 10ms !important;
+}
+
+/* Apply content visibility optimization for off-screen content */
+.content-viz {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
+}
+
+/* GPU compositing layer - helps with scroll smoothness */
+.gpu-layer {
+  perspective: 1000px;
+  isolation: isolate;
+  translate: 0;
+}
+
