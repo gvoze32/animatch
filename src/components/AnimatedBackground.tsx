@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface AnimatedBackgroundProps {
@@ -7,13 +7,18 @@ interface AnimatedBackgroundProps {
 }
 
 export default function AnimatedBackground({ className = '', children }: AnimatedBackgroundProps) {
-  const floatingDots = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 2,
-    duration: Math.random() * 20 + 10,
-  }));
+  const [floatingDots, setFloatingDots] = useState<any[]>([]);
+
+  useEffect(() => {
+    const dots = Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 2,
+      duration: Math.random() * 20 + 10,
+    }));
+    setFloatingDots(dots);
+  }, []);
 
   return (
     <div className={`relative overflow-hidden flex-grow ${className}`}>
