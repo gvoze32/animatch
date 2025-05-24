@@ -212,15 +212,14 @@ export default function AnimeRecommendationApp() {
     
     // Create a sequential state update
     const performReset = () => {
-      // Reset anime selection state
+      // Reset semua state ke awal
       setSelectedAnime(null);
       setRecommendations([]);
       setError('');
-      
-      // Show search results if they exist
-      setShowSearchResults(true);
-      
-      console.log("App state reset successfully");
+      setSearchQuery('');
+      setSearchResults([]);
+      setShowSearchResults(false);
+      console.log("App state reset to initial state");
     };
     
     // Perform the reset
@@ -363,29 +362,28 @@ export default function AnimeRecommendationApp() {
       >
         {/* Header with motion animation based on search state - Entire header container is clickable */}
         <motion.div 
-          className={`text-center group relative clickable-header py-4 px-6 rounded-xl transition-all active:bg-white/10
-            ${searchResults.length > 0 && showSearchResults && !selectedAnime ? 'hover:bg-white/5 hover:backdrop-blur-sm cursor-pointer' : 'cursor-default'}`}
+          className="text-center group relative clickable-header py-4 px-6 rounded-xl transition-all active:bg-white/10 hover:bg-white/5 hover:backdrop-blur-sm cursor-pointer"
           role="button"
-          tabIndex={searchResults.length > 0 && showSearchResults && !selectedAnime ? 0 : -1}
+          tabIndex={0}
           aria-label="Back to home"
           style={{
-            marginBottom: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '1.5rem' : '3rem',
-            marginTop: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '2rem' : '0rem',
-            transform: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 'scale(0.9)' : 'scale(1)',
-            boxShadow: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '0 0 0px rgba(96, 165, 250, 0.15)' : undefined,
-            pointerEvents: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 'auto' : 'none',
+            marginBottom: '1.5rem',
+            marginTop: '2rem',
+            transform: 'scale(0.9)',
+            pointerEvents: 'auto',
+            boxShadow: '0 0 0px rgba(96, 165, 250, 0.15)'
           }}
-          onClick={searchResults.length > 0 && showSearchResults && !selectedAnime ? (e) => {
+          onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             handleBackToSearch();
-          } : undefined}
-          onKeyDown={searchResults.length > 0 && showSearchResults && !selectedAnime ? (e) => {
+          }}
+          onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleBackToSearch();
             }
-          } : undefined}
+          }}
         >
           {/* Small home icon indicator - only visible on hover */}
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-60 transition-opacity">
