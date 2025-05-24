@@ -589,9 +589,6 @@ export default function AnimeRecommendationApp() {
                                   {formatScore(selectedAnime.averageScore)}
                                 </span>
                               )}
-                              <Badge className={`text-sm font-semibold ${getSourceColor(selectedAnime.source)}`}>
-                                From {selectedAnime.source}
-                              </Badge>
                             </CardDescription>
                           </motion.div>
                         </CardHeader>

@@ -1,110 +1,50 @@
 import React from 'react';
-import { Github, ExternalLink, Heart, Twitter, Instagram } from 'lucide-react';
-import { FadeIn } from './Motion';
+import { Github, Twitter, Instagram, Heart, Sparkles } from 'lucide-react';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
 
 export default function Footer() {
   return (
-    <footer className="w-full py-12 mt-auto backdrop-blur-sm bg-blue-950/80 border-t border-white/10">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Logo and copyright */}
-          <FadeIn delay={0.1} className="flex flex-col items-center md:items-start">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-3">
-              AniMatch
-            </h3>
-            <p className="text-sm text-white/70 text-center md:text-left mb-3">
-              © {new Date().getFullYear()} AniMatch - Your Best Anime Recommendation Platform
-            </p>
-            <div className="flex items-center text-white/60">
-              <Heart size={14} className="mr-1.5 text-red-400" />
-              <span className="text-xs">Made with love for anime community</span>
-            </div>
-          </FadeIn>
-
-          {/* Quick links */}
-          <FadeIn delay={0.2} className="flex flex-col items-center md:items-start">
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
-              Quick Links
-            </h4>
-            <ul className="space-y-3 text-center md:text-left">
-              <li>
-                <a 
-                  href="#" 
-                  className="text-sm text-white/70 hover:text-blue-400 transition-colors flex items-center justify-center md:justify-start group"
-                >
-                  <ExternalLink size={14} className="mr-2 group-hover:scale-110 transition-transform" />
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-sm text-white/70 hover:text-blue-400 transition-colors flex items-center justify-center md:justify-start group"
-                >
-                  <ExternalLink size={14} className="mr-2 group-hover:scale-110 transition-transform" />
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-sm text-white/70 hover:text-blue-400 transition-colors flex items-center justify-center md:justify-start group"
-                >
-                  <ExternalLink size={14} className="mr-2 group-hover:scale-110 transition-transform" />
-                  Terms of Service
-                </a>
-              </li>
-            </ul>
-          </FadeIn>
-
-          {/* Connect */}
-          <FadeIn delay={0.3} className="flex flex-col items-center md:items-start">
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
-              Connect With Us
-            </h4>
-            <div className="flex items-center space-x-4 mb-6">
-              <a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all duration-200 text-white group"
-                aria-label="GitHub"
-              >
-                <Github size={20} className="group-hover:rotate-12 transition-transform" />
-              </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all duration-200 text-white group"
-                aria-label="Twitter"
-              >
-                <Twitter size={20} className="group-hover:rotate-12 transition-transform" />
-              </a>
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all duration-200 text-white group"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} className="group-hover:rotate-12 transition-transform" />
-              </a>
-            </div>
-            <div className="flex items-center justify-center md:justify-start">
-              <div className="text-xs flex items-center bg-gradient-to-r from-blue-600/40 to-purple-600/40 text-white/90 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
-                Built with ❤️ for Anime Fans
-              </div>
-            </div>
-          </FadeIn>
+    <footer className="w-full mt-auto border-t border-white/10 bg-gradient-to-br from-blue-900/60 via-purple-900/60 to-indigo-900/60 backdrop-blur-sm">
+      <div className="container mx-auto px-4 py-8 flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-1 mb-1">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent select-none">AniMatch</span>
+            <Heart size={16} className="text-red-400 animate-pulse" />
+          </div>
+          <span className="text-sm text-white/60 font-medium">Your Personalized Anime Recommendation Platform</span>
         </div>
-
-        <div className="mt-8 pt-6 border-t border-white/10 text-center">
-          <p className="text-xs text-white/50 max-w-2xl mx-auto">
-            AniMatch is an independent anime recommendation platform. 
-            We respect the intellectual property rights of anime creators and distributors.
-          </p>
+        <div className="flex gap-2 flex-wrap justify-center">
+          <Badge className="bg-blue-500/10 border-blue-500/30 text-blue-300 flex items-center gap-1"><Sparkles className="w-3 h-3" /> AI Enhanced</Badge>
+          <Badge variant="secondary" className="bg-green-500/10 border-green-500/30 text-green-300">Open Source</Badge>
         </div>
+        <div className="flex gap-4 mt-2 mb-1">
+          <a href="#" className="text-xs text-white/60 hover:text-blue-400 transition-colors">About</a>
+          <a href="#" className="text-xs text-white/60 hover:text-blue-400 transition-colors">Privacy</a>
+          <a href="#" className="text-xs text-white/60 hover:text-blue-400 transition-colors">Terms</a>
+        </div>
+        <div className="flex items-center gap-4 mb-2">
+          <Button asChild variant="ghost" size="icon" className="rounded-full hover:bg-blue-500/20 transition-all">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <Github className="text-white/70 hover:text-white transition-colors" size={20} />
+            </a>
+          </Button>
+          <Button asChild variant="ghost" size="icon" className="rounded-full hover:bg-blue-500/20 transition-all">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <Twitter className="text-white/70 hover:text-white transition-colors" size={20} />
+            </a>
+          </Button>
+          <Button asChild variant="ghost" size="icon" className="rounded-full hover:bg-blue-500/20 transition-all">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Instagram className="text-white/70 hover:text-white transition-colors" size={20} />
+            </a>
+          </Button>
+        </div>
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
+        <p className="text-xs text-white/40 text-center max-w-xl">
+          © {new Date().getFullYear()} AniMatch. Built with ❤️. All rights reserved.<br />
+          <span className="text-[11px] text-white/30">Contact: <a href="mailto:hello@animatch.app" className="underline hover:text-blue-300">hello@animatch.app</a></span>
+        </p>
       </div>
     </footer>
   );
