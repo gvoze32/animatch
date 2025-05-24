@@ -235,6 +235,16 @@ export default function AnimeRecommendationApp() {
     }, 400);
   }, []);
 
+  // Fungsi untuk kembali ke hasil pencarian saja
+  const handleBackToSearchResults = useCallback(() => {
+    setSelectedAnime(null);
+    setShowSearchResults(true);
+    // Scroll ke hasil pencarian jika perlu
+    if (searchResultsRef.current) {
+      searchResultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
+
   const scrollToRecommendations = useCallback(() => {
     if (!recommendationsRef.current || isScrollingToSection.current) return;
     
@@ -515,7 +525,7 @@ export default function AnimeRecommendationApp() {
               {/* Back to Search Button */}
               <div className="flex justify-start">
                 <Button
-                  onClick={handleBackToSearch}
+                  onClick={handleBackToSearchResults}
                   variant="outline"
                   className="bg-white/10 border-white/30 text-white hover:bg-white/20 transition-all"
                   aria-label="Back to Search Results"
