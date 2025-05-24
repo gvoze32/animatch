@@ -96,9 +96,6 @@ const RecommendationCard: React.FC<RecommendationCardProps> = memo(({
                 ⭐ {formatScore(anime.averageScore)}
               </Badge>
             )}
-            <Badge className={`text-xs font-semibold ${getSourceColor(anime.source)}`}>
-              {anime.source}
-            </Badge>
             <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold">
               {confidencePercentage}% Match
             </Badge>

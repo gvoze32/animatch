@@ -106,9 +106,6 @@ const OptimizedAnimeCard: React.FC<OptimizedAnimeCardProps> = memo(({
                 ⭐ {formatScore(anime.averageScore)}
               </Badge>
             )}
-            <Badge className={`text-xs font-semibold ${getSourceColor(anime.source)}`}>
-              {anime.source}
-            </Badge>
           </div>
         </div>
         <CardHeader className="pb-2">
