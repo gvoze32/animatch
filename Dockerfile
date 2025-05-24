@@ -11,6 +11,13 @@ COPY src ./src
 
 RUN npm run build
 
-FROM caddy:latest
-COPY --from=build /app/dist /usr/share/caddy
-EXPOSE 80
+FROM node:18 AS prod
+WORKDIR /app
+
+RUN npm install -g serve
+
+COPY --from=build /app/dist ./dist
+
+CMD ["serve", "-s", "dist", "-l", "8080"]
+
+EXPOSE 8080
