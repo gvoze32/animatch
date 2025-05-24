@@ -622,7 +622,7 @@ export default function AnimeRecommendationApp() {
                               animate={{ opacity: 1 }}
                               transition={{ duration: 0.5, delay: 0.6 }}
                             >
-                              {stripHtml(selectedAnime.description)}
+                              {truncateText(stripHtml(selectedAnime.description), 450)}
                             </motion.p>
                           )}
                           {/* Button to scroll to recommendations */}
