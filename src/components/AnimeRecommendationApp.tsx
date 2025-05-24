@@ -543,23 +543,24 @@ export default function AnimeRecommendationApp() {
                   transition={{ duration: 0.5, type: "tween", ease: "easeOut" }}
                   className="render-optimized"
                 >
-                  <Card className="bg-white/10 border-white/20 backdrop-blur-sm overflow-hidden card-optimized">
+                  <Card className="text-card-foreground flex flex-col gap-0 rounded-xl border shadow-sm bg-white/10 border-white/20 backdrop-blur-sm overflow-hidden card-optimized py-0">
                     <div className="md:flex">
                       <div className="md:w-1/3 relative">
                         <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.7 }}
+                          className="!m-0 !p-0"
                         >
                           <OptimizedImage
                             src={getCoverImage(selectedAnime)}
                             alt={getAnimeTitle(selectedAnime)}
-                            className="w-full h-96 md:h-full object-cover"
+                            className="w-full h-96 md:h-full object-cover visible img-optimized rounded-none !m-0 !p-0"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:hidden"></div>
                         </motion.div>
                       </div>
-                      <div className="md:w-2/3 p-6">
+                      <div className="md:w-2/3 p-6 pt-4 pb-4 flex flex-col justify-center">
                         <CardHeader className="p-0 mb-4">
                           <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -626,7 +627,6 @@ export default function AnimeRecommendationApp() {
                               {stripHtml(selectedAnime.description)}
                             </motion.p>
                           )}
-                          
                           {/* Button to scroll to recommendations */}
                           <motion.div
                             initial={{ opacity: 0, y: 10 }}
