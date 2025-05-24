@@ -363,43 +363,29 @@ export default function AnimeRecommendationApp() {
       >
         {/* Header with motion animation based on search state - Entire header container is clickable */}
         <motion.div 
-          className="text-center group relative clickable-header hover:bg-white/5 hover:backdrop-blur-sm py-4 px-6 rounded-xl cursor-pointer transition-all active:bg-white/10"
-          animate={{ 
-            marginBottom: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? "1.5rem" : "3rem",
-            marginTop: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? "2rem" : "0rem", 
-            scale: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 0.9 : 1
+          className={`text-center group relative clickable-header py-4 px-6 rounded-xl transition-all active:bg-white/10
+            ${searchResults.length > 0 && showSearchResults && !selectedAnime ? 'hover:bg-white/5 hover:backdrop-blur-sm cursor-pointer' : 'cursor-default'}`}
+          role="button"
+          tabIndex={searchResults.length > 0 && showSearchResults && !selectedAnime ? 0 : -1}
+          aria-label="Back to home"
+          style={{
+            marginBottom: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '1.5rem' : '3rem',
+            marginTop: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '2rem' : '0rem',
+            transform: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 'scale(0.9)' : 'scale(1)',
+            boxShadow: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '0 0 0px rgba(96, 165, 250, 0.15)' : undefined,
+            pointerEvents: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 'auto' : 'none',
           }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          onClick={useCallback((e: React.MouseEvent) => {
-            // Using our enhanced click handler
+          onClick={searchResults.length > 0 && showSearchResults && !selectedAnime ? (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
-            console.log("Header area clicked - navigating home");
-            
-            // Add visual feedback
-            const target = e.currentTarget;
-            if (target instanceof HTMLElement) {
-              target.classList.add('header-click-feedback');
-              setTimeout(() => target.classList.remove('header-click-feedback'), 300);
-            }
-            
-            // Execute with slight delay to ensure visual feedback is seen
-            setTimeout(() => handleBackToSearch(), 100);
-          }, [handleBackToSearch])}
-          role="button"
-          tabIndex={0}
-          aria-label="Back to home"
-          whileHover={{ 
-            boxShadow: "0 0 30px rgba(96, 165, 250, 0.15)",
-          }}
-          whileTap={{ scale: 0.98 }}
-          onKeyDown={(e) => {
+            handleBackToSearch();
+          } : undefined}
+          onKeyDown={searchResults.length > 0 && showSearchResults && !selectedAnime ? (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleBackToSearch();
             }
-          }}
+          } : undefined}
         >
           {/* Small home icon indicator - only visible on hover */}
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-60 transition-opacity">
@@ -414,39 +400,14 @@ export default function AnimeRecommendationApp() {
             className={`font-bold text-white mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent
               hover:scale-105 active:scale-95 relative
               transition-transform duration-300 ease-out
-              ${
-              (searchResults.length > 0 && showSearchResults && !selectedAnime)
-                ? "text-4xl md:text-5xl"
-                : "text-5xl md:text-6xl"
-            }`}
-            animate={{ 
-              fontSize: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? "2.5rem" : "3.5rem"
-            }}
-            whileHover={{ 
-              textShadow: "0 0 15px rgba(96, 165, 250, 0.7)",
-              transition: { duration: 0.2 }
-            }}
-            transition={{ duration: 0.4 }}
-            onClick={(e) => {
-              // Prevent event bubbling to avoid triggering parent's click handler twice
-              e.stopPropagation();
-              handleBackToSearch();
-            }}
-            style={{ pointerEvents: "none" }} // Make text non-clickable to avoid double clicking
+              ${(searchResults.length > 0 && showSearchResults && !selectedAnime) ? 'text-4xl md:text-5xl' : 'text-5xl md:text-6xl'}`}
+            style={{ pointerEvents: 'none', fontSize: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '2.5rem' : '3.5rem' }}
           >
             AniMatch
           </motion.h1>
           <motion.p 
             className="text-blue-200 max-w-2xl mx-auto hover:text-blue-300"
-            animate={{ 
-              fontSize: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? "1rem" : "1.25rem",
-              opacity: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 0.8 : 1
-            }}
-            whileHover={{
-              scale: 1.05
-            }}
-            transition={{ duration: 0.4 }}
-            style={{ pointerEvents: "none" }} // Make paragraph non-clickable to avoid double clicking
+            style={{ pointerEvents: 'none', fontSize: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? '1rem' : '1.25rem', opacity: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 0.8 : 1 }}
           >
             Find similar anime to your favorites! Search for anime and get personalized recommendations.
           </motion.p>
@@ -490,43 +451,6 @@ export default function AnimeRecommendationApp() {
             </Button>
           </div>
         </motion.form>
-
-        {/* 18+ Content Filter Toggle */}
-        <motion.div 
-          className="max-w-2xl mx-auto mb-4"
-          animate={{ 
-            marginBottom: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? "1rem" : "2rem",
-            scale: (searchResults.length > 0 && showSearchResults && !selectedAnime) ? 0.95 : 1
-          }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        >
-          <label className="flex items-center justify-center gap-3 text-white/70 hover:text-white cursor-pointer transition-colors">
-            <input
-              type="checkbox"
-              checked={includeAdultContent}
-              onChange={(e) => setIncludeAdultContent(e.target.checked)}
-              className="w-4 h-4 rounded border-white/30 bg-white/10 text-blue-500 focus:ring-blue-500 focus:ring-2 focus:ring-offset-0"
-            />
-            <span className="text-sm select-none">
-              Include 18+ content
-            </span>
-          </label>
-        </motion.div>
-
-        {error && (
-          <motion.div 
-            className="max-w-2xl mx-auto mb-8"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <Alert className="border-red-500 bg-red-500/10 backdrop-blur-sm">
-              <AlertCircle className="h-4 w-4 text-red-400" />
-              <AlertDescription className="text-red-400">
-                {error}
-              </AlertDescription>
-            </Alert>
-          </motion.div>
-        )}
 
         {/* Search Results with AnimatePresence for smooth transitions */}
         <AnimatePresence mode="wait">
@@ -770,6 +694,18 @@ export default function AnimeRecommendationApp() {
           )}
         </AnimatePresence>
       </motion.div>
+      {/* 18+ Content Filter Toggle dipindahkan ke bawah */}
+      <div className="w-full flex justify-center mt-8 mb-2">
+        <label className="flex items-center gap-3 text-white/50 hover:text-white/70 cursor-pointer transition-colors text-xs">
+          <input
+            type="checkbox"
+            checked={includeAdultContent}
+            onChange={(e) => setIncludeAdultContent(e.target.checked)}
+            className="w-4 h-4 rounded border-white/30 bg-white/10 text-blue-500 focus:ring-blue-500 focus:ring-2 focus:ring-offset-0"
+          />
+          <span className="select-none">Include 18+ content</span>
+        </label>
+      </div>
     </AnimatedBackground>
   );
 }
