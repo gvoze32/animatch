@@ -1,0 +1,30 @@
+---
+const sources = [
+  { name: "AniList", href: "https://anilist.co" },
+  { name: "MyAnimeList (via Jikan)", href: "https://jikan.moe" },
+  { name: "Kitsu", href: "https://kitsu.app" },
+];
+---
+
+<footer class="border-t border-white/[0.06]">
+  <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 text-sm text-white/40 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="font-display text-base font-semibold text-white/80">AniMatch</p>
+      <p class="mt-1">Community-powered anime recommendations, ranked by similarity.</p>
+    </div>
+    <p>
+      Data from
+      {
+        sources.map((source, index) => (
+          <>
+            {index > 0 && (index === sources.length - 1 ? " & " : ", ")}
+            <a href={source.href} target="_blank" rel="noopener noreferrer" class="text-white/60 underline-offset-4 hover:text-white hover:underline">
+              {source.name}
+            </a>
+          </>
+        ))
+      }
+      . Not affiliated with any of them.
+    </p>
+  </div>
+</footer>

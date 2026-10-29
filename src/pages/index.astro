@@ -1,12 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import AnimeRecommendationApp from "../components/AnimeRecommendationApp.tsx";
-import Footer from "../components/Footer.tsx";
-import "../styles/global.css";
-import "../styles/performance.css";
+import AniMatchApp from "../components/AniMatchApp.tsx";
+import Footer from "../components/Footer.astro";
 ---
 
-<Layout title="AniMatch - Best Anime Recommendations">
-  <AnimeRecommendationApp client:load />
-  <Footer client:load />
+<Layout title="AniMatch — Find anime similar to your favorites">
+  <AniMatchApp client:load />
+  <Footer />
 </Layout>
